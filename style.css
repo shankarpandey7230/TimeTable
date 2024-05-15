@@ -1,0 +1,9 @@
+.flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-shadow {
+  box-shadow: 0px 5px 10px rgba(0, 0, 5, 0.1);
+}
