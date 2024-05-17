@@ -1,6 +1,10 @@
 // alert('shgkas');
 
 let taskList = [];
+const savedHrsElm = document.getElementById('savedHrsElm');
+const hoursPerWeek = 24 * 7;
+const totalhourElm = document.getElementById('ttlHrs');
+
 const handleSubmit = (e) => {
   //   e.preventDefault();
   //   console.log(e);
@@ -8,7 +12,7 @@ const handleSubmit = (e) => {
   //   console.log(formData);
   const task = formData.get('task');
 
-  const hr = formData.get('hr');
+  const hr = +formData.get('hr');
   //   console.log(task, hr);
   const obj = {
     task,
@@ -16,10 +20,13 @@ const handleSubmit = (e) => {
     id: randomId(),
     type: 'entry',
   };
+  const permittedTotal = totalHours();
+  if (permittedTotal + hr > hoursPerWeek)
+    return alert('Hours in a week exceeded');
   taskList.push(obj);
   displayEntryList();
 
-  console.log(taskList);
+  // console.log(taskList);
 };
 
 const displayEntryList = () => {
@@ -48,6 +55,7 @@ const displayEntryList = () => {
   </tr>`;
   });
   entryElm.innerHTML = str;
+  totalHours();
 };
 const displayBadList = () => {
   let str = '';
@@ -108,4 +116,12 @@ const switchTask = (id, type) => {
   });
   displayEntryList();
   displayBadList();
+};
+
+const totalHours = () => {
+  const totalHrs = taskList.reduce((acc, item) => {
+    return acc + item.hr;
+  }, 0);
+  totalhourElm.innerHTML = totalHrs;
+  return totalHrs;
 };
