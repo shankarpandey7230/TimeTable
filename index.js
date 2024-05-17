@@ -83,6 +83,7 @@ const displayBadList = () => {
   </tr>`;
   });
   badElm.innerHTML = str;
+  savedHrsElm.innerText = badList.reduce((acc, item) => acc + item.hr, 0);
 };
 
 const randomId = (length = 6) => {
