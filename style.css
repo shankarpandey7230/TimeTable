@@ -1,30 +1,8 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+.wrapper {
+  background: linear-gradient(rgba(120, 0, 72, 0.633), rgba(0, 36, 199, 0.562));
+  min-height: 100vh;
 }
 
-.flex {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.form-shadow {
-  height: 200px;
-  box-shadow: 0px 5px 10px rgba(0, 0, 5, 0.1);
-}
-.margin {
-  margin-left: 10px;
-}
-.font {
-  font-size: 20px;
-}
-
-.saving-time {
-  height: 30px;
-}
-.flex-col {
-  display: flex;
-  flex-direction: column;
+.table {
+  --bs-table-bg: transparent;
 }
