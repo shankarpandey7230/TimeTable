@@ -9,11 +9,12 @@ const handleSubmit = (e) => {
   const task = formData.get('task');
 
   const hr = formData.get('hr');
-  console.log(task, hr);
+  //   console.log(task, hr);
   const obj = {
     task,
     hr,
     id: randomId(),
+    type: 'entry',
   };
   taskList.push(obj);
   displayEntryList();
@@ -22,11 +23,12 @@ const handleSubmit = (e) => {
 };
 
 const displayEntryList = () => {
-  //   console.log(taskList);
   let str = '';
+  console.log(taskList);
   const entryElm = document.getElementById('entryList');
   //   console.log(entryElm);
-  taskList.map((item, i) => {
+  const entryList = taskList.filter((item) => item.type === 'entry');
+  entryList.map((item, i) => {
     str += `  <tr>
     <th scope="row">${i + 1}</th>
     <td>${item.task}</td>
@@ -37,13 +39,42 @@ const displayEntryList = () => {
       }")' type="button" class="btn btn-danger">
         <i class="fa-solid fa-trash"></i>
       </button>
-      <button type="button" class="btn btn-success">
+      <button onclick = "switchTask('${
+        item.id
+      }','bad')" type="button" class="btn btn-success">
         <i class="fa-solid fa-arrow-right"></i>
       </button>
     </td>
   </tr>`;
   });
   entryElm.innerHTML = str;
+};
+const displayBadList = () => {
+  let str = '';
+  console.log(taskList);
+  const badElm = document.getElementById('badList');
+  //   console.log(entryElm);
+  const badList = taskList.filter((item) => item.type === 'bad');
+  badList.map((item, i) => {
+    str += `  <tr>
+    <th scope="row">${i + 1}</th>
+    <td>${item.task}</td>
+    <td>${item.hr}</td>
+    <td class="text-end">
+      <button onclick = 'handleDelete("${
+        item.id
+      }")' type="button" class="btn btn-danger">
+        <i class="fa-solid fa-trash"></i>
+      </button>
+      <button onclick = "switchTask('${
+        item.id
+      }','entry')" type="button" class="btn btn-secondary">
+        <i class="fa-solid fa-arrow-left"></i>
+      </button>
+    </td>
+  </tr>`;
+  });
+  badElm.innerHTML = str;
 };
 
 const randomId = (length = 6) => {
@@ -60,7 +91,21 @@ const handleDelete = (id) => {
   //   console.log(id);
   if (window.confirm('Are you sure to delete?')) {
     taskList = taskList.filter((items) => items.id !== id);
-    console.log(taskList);
+    // console.log(taskList);
     displayEntryList();
+    displayBadList();
   }
+};
+
+const switchTask = (id, type) => {
+  //   console.log(id, type);
+  taskList = taskList.map((item) => {
+    // console.log(item);
+    if (item.id === id) {
+      item.type = type;
+    }
+    return item;
+  });
+  displayEntryList();
+  displayBadList();
 };
